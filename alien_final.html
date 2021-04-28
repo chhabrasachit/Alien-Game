@@ -1,0 +1,305 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+        timer = null;
+        stepNumber = 11;
+        onthewayLeft = false;
+        jumpInProgress = true;
+        maxwidthWindow = window.innerWidth - 145;
+        die = false
+
+        console.log("MaxScreen", maxwidthWindow);
+
+        function stepLeft() {
+            stepNumber++;
+            if (stepNumber > 30) {
+                stepNumber = 0;
+            }
+            alien.src = "images/alien/alienlwalk" + stepNumber + ".gif";
+        }
+
+        function stepRight() {
+            stepNumber++;
+            if (stepNumber > 30) {
+                stepNumber = 0;
+            }
+            alien.src = "images/alien/alienrwalk" + stepNumber + ".gif";
+        }
+
+
+        // alien walks, if touches small boxes, boxes slide
+        function slideBoxR() {
+            //alien.style.left = parseInt(alien.style.left) + 1 + 'px';
+            if (parseInt(alien.style.left) + 76 == parseInt(boxSmall.style.left) &&
+                parseInt(alien.style.top) + 32 <= parseInt(boxSmall.style.top) &&
+                parseInt(alien.style.top) + 96 >= parseInt(boxSmall.style.top) &&
+                332 <= parseInt(boxSmall.style.top) &&
+                396 >= parseInt(boxSmall.style.top)) {
+
+                let slide = setInterval(function () {
+                    boxSmall.style.left = parseInt(boxSmall.style.left) + 2 + 'px';
+                    if (parseInt(boxSmall.style.left) >= parseInt(alien.style.left) + 300 ||
+                        parseInt(boxSmall.style.left) >= maxwidthWindow)
+                        clearInterval(slide)
+                }, 1)
+            }
+            if (parseInt(alien.style.left) + 76 == parseInt(boxMed.style.left) &&
+                parseInt(alien.style.top) + 32 <= parseInt(boxMed.style.top) &&
+                parseInt(alien.style.top) + 96 >= parseInt(boxMed.style.top) &&
+                332 <= parseInt(boxMed.style.top) &&
+                396 >= parseInt(boxMed.style.top)) {
+
+                let slide = setInterval(function () {
+                    boxMed.style.left = parseInt(boxMed.style.left) + 2 + 'px';
+                    if (parseInt(boxMed.style.left) >= parseInt(alien.style.left) + 300 ||
+                        parseInt(boxMed.style.left) >= maxwidthWindow)
+                        clearInterval(slide)
+                }, 1)
+            }
+            if (parseInt(alien.style.left) + 76 == parseInt(boxLarge.style.left) &&
+                parseInt(alien.style.top) + 32 <= parseInt(boxLarge.style.top) &&
+                parseInt(alien.style.top) + 96 >= parseInt(boxLarge.style.top) &&
+                332 <= parseInt(boxLarge.style.top) &&
+                396 >= parseInt(boxLarge.style.top)) {
+
+                let slide = setInterval(function () {
+                    boxLarge.style.left = parseInt(boxLarge.style.left) + 2 + 'px';
+                    if (parseInt(boxLarge.style.left) >= parseInt(alien.style.left) + 300 ||
+                        parseInt(boxLarge.style.left) >= maxwidthWindow)
+                        clearInterval(slide)
+                }, 1)
+            }
+
+        }
+
+        function slideBoxL() {
+            //alien.style.right = parseInt(alien.style.right) + 1 + 'px';
+            if (parseInt(alien.style.left) == parseInt(boxSmall.style.left) &&
+                parseInt(alien.style.top) + 32 <= parseInt(boxSmall.style.top) &&
+                parseInt(alien.style.top) + 96 >= parseInt(boxSmall.style.top) &&
+                332 <= parseInt(boxSmall.style.top) &&
+                396 >= parseInt(boxSmall.style.top)) {
+
+                let slide = setInterval(function () {
+                    boxSmall.style.left = parseInt(boxSmall.style.left) - 2 + 'px';
+                    if (parseInt(boxSmall.style.right) >= parseInt(alien.style.right) - 300)
+                        clearInterval(slide)
+                }, 1)
+            }
+            if (parseInt(alien.style.left) == parseInt(boxMed.style.left) &&
+                parseInt(alien.style.top) + 32 <= parseInt(boxMed.style.top) &&
+                parseInt(alien.style.top) + 96 >= parseInt(boxMed.style.top) &&
+                332 <= parseInt(boxMed.style.top) &&
+                396 >= parseInt(boxMed.style.top)) {
+
+                let slide = setInterval(function () {
+                    boxMed.style.left = parseInt(boxMed.style.left) - 2 + 'px';
+                    if (parseInt(boxMed.style.right) >= parseInt(alien.style.right) - 300)
+                        clearInterval(slide)
+                }, 1)
+            }
+            if (parseInt(alien.style.left) == parseInt(boxLarge.style.left) &&
+                parseInt(alien.style.top) + 32 <= parseInt(boxLarge.style.top) &&
+                parseInt(alien.style.top) + 96 >= parseInt(boxLarge.style.top) &&
+                332 <= parseInt(boxLarge.style.top) &&
+                396 >= parseInt(boxLarge.style.top)) {
+
+                let slide = setInterval(function () {
+                    boxLarge.style.left = parseInt(boxLarge.style.left) - 2 + 'px';
+                    if (parseInt(boxLarge.style.right) >= parseInt(alien.style.right) - 300)
+                        clearInterval(slide)
+                }, 1)
+            }
+        }
+
+        function touchBigBox() {
+            if (((parseInt(boxLarge.style.left) - 100) ==
+                    parseInt(alien.style.left)) && (parseInt(boxLarge.height) >=
+                    2 / 3 * (parseInt(alien.height)))) {
+
+                console.log("turn around right here")
+                clearInterval(timer);
+                timer = null;
+                CallMoveLeft();
+            }
+            if (((parseInt(boxMed.style.left) - 100) ==
+                    parseInt(alien.style.left)) && (parseInt(boxMed.height) >=
+                    2 / 3 * (parseInt(alien.height)))) {
+
+                console.log("turn around right here")
+                clearInterval(timer);
+                timer = null;
+                CallMoveLeft();
+            }
+            if (((parseInt(boxSmall.style.left) - 100) ==
+                    parseInt(alien.style.left)) && (parseInt(boxSmall.height) >=
+                    2 / 3 * (parseInt(alien.height)))) {
+
+                console.log("turn around right here")
+                clearInterval(timer);
+                timer = null;
+                CallMoveLeft()
+            }
+        }
+
+        function explosion() {
+            console.log(parseInt(alien.style.top));
+            if (parseInt(alien.style.top) + 96 == parseInt(boxSmall.style.top) &&
+                parseInt(boxSmall.style.left) <= parseInt(alien.style.left) + 48 &&
+                parseInt(alien.style.left) + 48 <= parseInt(boxSmall.style.left) +
+                parseInt(boxSmall.height)) {
+                alien.src = "images/explode.gif"
+                die = true
+                setInterval(changeImage, 100)
+
+            }
+            if (parseInt(alien.style.top) + 96 == parseInt(boxMed.style.top) &&
+                parseInt(boxMed.style.left) <= parseInt(alien.style.left) + 48 &&
+                parseInt(alien.style.left) + 48 <= parseInt(boxMed.style.left) +
+                parseInt(boxMed.height)) {
+                alien.src = "images/explode.gif"
+                die = true
+                setInterval(changeImage, 100)
+
+            }
+            if (parseInt(alien.style.top) + 96 == parseInt(boxLarge.style.top) &&
+                parseInt(boxLarge.style.left) <= parseInt(alien.style.left) + 48 &&
+                parseInt(alien.style.left) + 48 <= parseInt(boxLarge.style.left) +
+                parseInt(boxLarge.height)) {
+                alien.src = "images/explode.gif"
+                console.log("after explosion")
+                die = true
+                setInterval(changeImage, 100)
+            }
+
+        }
+
+        function changeImage() {
+            console.log("inside changeImage()")
+            alien.src = "images/blank.png"
+            document.getElementById("gameOver").innerHTML = "Game Over"
+        }
+
+
+        function moveLeft() {
+            if (die == true) {
+                return
+            }
+            if (parseInt(alien.style.left) <= 1) {
+                clearInterval(timer);
+                timer = null;
+                CallMoveRight();
+                onthewayLeft = false
+            } else {
+                if (jumpInProgress == true) {
+                    stepLeft();
+                }
+                alien.style.left = parseInt(alien.style.left) - 1 + "px";
+                slideBoxL();
+                explosion();
+                touchBigBox();
+            }
+        }
+
+        function moveRight() {
+
+            if (die == true) {
+                return
+            }
+            if (parseInt(alien.style.left) >= maxwidthWindow) {
+                clearInterval(timer);
+                timer = null;
+                CallMoveLeft();
+            } else {
+                if (jumpInProgress == true) {
+                    stepRight();
+                }
+                alien.style.left = parseInt(alien.style.left) + 1 + "px";
+                explosion();
+                slideBoxR();
+                touchBigBox();
+            }
+        }
+
+        function CallMoveLeft() {
+
+            onthewayLeft = true;
+            if (timer == null) {
+                timer = setInterval(moveLeft, 10);
+            } else {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        function CallMoveRight() {
+            if (onthewayLeft == false) {
+                if (timer == null) {
+                    timer = setInterval(moveRight, 10)
+                } else {
+                    clearInterval(timer)
+                    timer = null
+                }
+            } else {
+                CallMoveLeft()
+            }
+        }
+
+
+        var x = 0;
+        var interval;
+
+        function myJump() {
+            jumpInProgress = false;
+            if (alien.style.top == '300px') {
+                interval = setInterval(function () {
+                    if (jumpInProgress == false) {
+                        // ascending jump
+                        alien.style.top = parseInt(alien.style.top) - 1 + 'px';
+                        // descending from jump
+                        if (alien.style.top == '170px') {
+                            down = setInterval(function () {
+                                alien.style.top = parseInt(alien.style.top) + 1 + 'px';
+                                if (alien.style.top == '300px') {
+                                    jumpInProgress = true;
+                                    clearInterval(down)
+                                }
+                            }, 9)
+                            clearInterval(interval)
+                        }
+                    }
+                }, 9)
+            }
+        }
+
+        // main function
+        onload = function () {
+            alien = document.getElementById('x');
+            boxSmall = document.getElementById('small');
+            boxMed = document.getElementById('med');
+            boxLarge = document.getElementById('large');
+            CallMoveRight()
+            //
+            //console.log("test left position",document.getElementById('test').style.left)
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <p id="gameOver"></p>
+    <img src="images/alien/alienrwalk11.gif" id="x" onmouseover="myJump()"
+        style="position:absolute; top:300px; left:10px">
+
+    <!--top position = 396 - height-->
+    <img src="images/box1.png" id="small" height="30" style="position:absolute; top:366px; left:400px">
+    <img src="images/box1.png" id="med" height="60" style="position:absolute; top:336px; left:300px">
+    <img src="images/box1.png" id="large" height="100" style="position:absolute; top:296px; left:1000px">
+
+
+</body>
+
+</html>

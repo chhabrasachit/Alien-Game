@@ -1,0 +1,15 @@
+body {
+    height: 100%;
+    background-color: black;
+
+    background-repeat: no-repeat center;
+    background-size: cover;
+}
+
+#gameOver {
+    margin-top: 30px;
+    position: center;
+    font-size: 100px;
+    color: red;
+
+}
